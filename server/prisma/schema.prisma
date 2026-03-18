@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String       @id @default(uuid())
+  email       String       @unique
+  password    String
+  createdAt   DateTime     @default(now())
+  decisions   Decision[]
+  energyLogs  EnergyLog[]
+  reflections Reflection[]
+  habits      Habit[]
+}
+
+model Decision {
+  id          String   @id @default(uuid())
+  title       String
+  context     String?
+  choiceMade  String
+  outcome     String?
+  regretScore Int?     @default(0)
+  createdAt   DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model EnergyLog {
+  id          String   @id @default(uuid())
+  energyLevel Int
+  focusLevel  Int
+  date        DateTime @db.Date
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+}
+
+model Reflection {
+  id         String   @id @default(uuid())
+  goodThings String
+  badThings  String
+  lesson     String
+  date       DateTime @db.Date
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+}
+
+model Habit {
+  id        String   @id @default(uuid())
+  name      String
+  completed Boolean  @default(false)
+  date      DateTime @db.Date
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, name, date])
+  @@index([userId])
+}
