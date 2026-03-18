@@ -11,7 +11,7 @@ async function bootstrap() {
     methods: "PUT, GET, DELETE, UPDATE, PATCH",
     credentials: true,
   });
-  app.setGlobalPrefix("api/v1");
+  app.setGlobalPrefix("api");
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
