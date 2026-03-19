@@ -5,6 +5,7 @@ import { AuthModule } from "./auth/auth.module";
 import { DecisionsModule } from "./decisions/dicisions.module";
 import { EnergyModule } from "./energy/energy.module";
 import { HabitsModule } from "./habits/habits.module";
+import { InsightsModule } from "./insights/insights.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { HabitsModule } from "./habits/habits.module";
     DecisionsModule,
     EnergyModule,
     HabitsModule,
+    InsightsModule,
   ],
 })
 export class AppModule {}
